@@ -6,11 +6,13 @@
   "scripts": {
     "lint": "pnpm --filter @location-alarm/mobile lint && pnpm --filter @location-alarm/web lint",
     "typecheck": "pnpm --filter @location-alarm/mobile typecheck && pnpm --filter @location-alarm/web typecheck",
+    "tokens:generate": "node packages/shared/scripts/generate-css.mjs",
+    "tokens:check": "node packages/shared/scripts/generate-css.mjs --check",
     "format": "prettier . --write",
     "format:check": "prettier . --check",
     "build": "pnpm --filter @location-alarm/web build",
     "dev:mobile": "pnpm --filter @location-alarm/mobile start",
-    "check": "pnpm lint && pnpm typecheck && pnpm format:check && pnpm build",
+    "check": "pnpm tokens:check && pnpm lint && pnpm typecheck && pnpm format:check && pnpm build",
     "prepare": "lefthook install"
   },
   "devDependencies": {

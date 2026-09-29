@@ -1,5 +1,9 @@
+import { tokens, type Alarm } from '@location-alarm/shared';
 import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+
+const alarms: Alarm[] = [];
+const { color, space, typography } = tokens;
 
 export default function AlarmListScreen() {
   return (
@@ -7,12 +11,14 @@ export default function AlarmListScreen() {
       <View style={styles.header}>
         <Text style={styles.title}>알람</Text>
       </View>
-      <View style={styles.emptyState}>
-        <Text style={styles.emptyTitle}>아직 알람이 없어요</Text>
-        <Text style={styles.emptyDescription}>
-          내릴 장소를 지정하면 근처에 왔을 때 알려드려요.
-        </Text>
-      </View>
+      {alarms.length === 0 && (
+        <View style={styles.emptyState}>
+          <Text style={styles.emptyTitle}>아직 알람이 없어요</Text>
+          <Text style={styles.emptyDescription}>
+            내릴 장소를 지정하면 근처에 왔을 때 알려드려요.
+          </Text>
+        </View>
+      )}
     </SafeAreaView>
   );
 }
@@ -20,31 +26,32 @@ export default function AlarmListScreen() {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: color.light.bg,
   },
   header: {
-    paddingHorizontal: 24,
-    paddingVertical: 20,
+    paddingHorizontal: space[6],
+    paddingVertical: space[5],
   },
   title: {
-    color: '#14171A',
-    fontSize: 32,
-    fontWeight: '700',
+    color: color.light.text,
+    fontSize: typography.display.fontSize,
+    lineHeight: typography.display.lineHeight,
+    fontWeight: String(typography.display.fontWeight) as '700',
   },
   emptyState: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 32,
-    gap: 8,
+    paddingHorizontal: space[8],
+    gap: space[2],
   },
   emptyTitle: {
-    color: '#14171A',
+    color: color.light.text,
     fontSize: 18,
     fontWeight: '600',
   },
   emptyDescription: {
-    color: '#6B7280',
+    color: color.light.textMuted,
     fontSize: 14,
     lineHeight: 22,
     textAlign: 'center',

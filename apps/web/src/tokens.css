@@ -1,0 +1,67 @@
+/* Generated from packages/shared/tokens.json. Run pnpm tokens:generate. */
+:root {
+  --font-family: 'IBM Plex Sans KR', system-ui, sans-serif;
+  --color-bg: #ffffff;
+  --color-surface: #faf7fc;
+  --color-border: #eae3f0;
+  --color-text: #14171a;
+  --color-textMuted: #6b7280;
+  --color-accent: #ba73ea;
+  --color-accentInk: #6d558e;
+  --color-accentSoft: #f5effa;
+  --color-onAccent: #ffffff;
+  --color-success: #15803d;
+  --color-toggleOn: #7dbda4;
+  --color-danger: #c2410c;
+  --color-alarmBg: #17131f;
+  --type-display-size: 32px;
+  --type-display-line: 40px;
+  --type-display-weight: 700;
+  --type-display-tracking: -0.02em;
+  --type-title-size: 22px;
+  --type-title-line: 28px;
+  --type-title-weight: 600;
+  --type-title-tracking: -0.01em;
+  --type-body-size: 16px;
+  --type-body-line: 24px;
+  --type-body-weight: 400;
+  --type-body-tracking: 0em;
+  --type-label-size: 14px;
+  --type-label-line: 20px;
+  --type-label-weight: 500;
+  --type-label-tracking: 0em;
+  --type-caption-size: 13px;
+  --type-caption-line: 18px;
+  --type-caption-weight: 400;
+  --type-caption-tracking: 0em;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-full: 999px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #17141d;
+    --color-surface: #211d2a;
+    --color-border: #352e40;
+    --color-text: #f2f4f7;
+    --color-textMuted: #9ba3af;
+    --color-accent: #d7c5ef;
+    --color-accentInk: #d7c5ef;
+    --color-accentSoft: #352b42;
+    --color-onAccent: #292039;
+    --color-success: #4ade80;
+    --color-toggleOn: #95d0b3;
+    --color-danger: #fb923c;
+    --color-alarmBg: #17131f;
+  }
+}
