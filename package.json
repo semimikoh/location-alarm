@@ -9,6 +9,7 @@
     "format": "prettier . --write",
     "format:check": "prettier . --check",
     "build": "pnpm --filter @location-alarm/web build",
+    "dev:mobile": "pnpm --filter @location-alarm/mobile start",
     "check": "pnpm lint && pnpm typecheck && pnpm format:check && pnpm build",
     "prepare": "lefthook install"
   },

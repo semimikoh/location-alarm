@@ -6,4 +6,6 @@ dist/
 .expo/
 **/.expo/
 apps/mobile/assets/editor/
+apps/mobile/ios/
+apps/mobile/android/
 pnpm-lock.yaml
