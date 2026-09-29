@@ -1,0 +1,7 @@
+{
+  "name": "location-alarm",
+  "private": true,
+  "version": "0.0.0",
+  "packageManager": "pnpm@12.3.4",
+  "scripts": {}
+}

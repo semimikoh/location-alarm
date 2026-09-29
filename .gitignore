@@ -1,0 +1,12 @@
+design/
+node_modules/
+**/node_modules/
+.expo/
+**/.expo/
+dist/
+**/dist/
+apps/mobile/assets/editor/
+.env
+.env.*
+!.env.example
+.DS_Store
