@@ -3,5 +3,18 @@
   "private": true,
   "version": "0.0.0",
   "packageManager": "pnpm@12.3.4",
-  "scripts": {}
+  "scripts": {
+    "lint": "pnpm --filter @location-alarm/mobile lint && pnpm --filter @location-alarm/web lint",
+    "typecheck": "pnpm --filter @location-alarm/mobile typecheck && pnpm --filter @location-alarm/web typecheck",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check",
+    "build": "pnpm --filter @location-alarm/web build",
+    "check": "pnpm lint && pnpm typecheck && pnpm format:check && pnpm build",
+    "prepare": "lefthook install"
+  },
+  "devDependencies": {
+    "lefthook": "^2.1.14",
+    "prettier": "^3.9.9",
+    "typescript": "^6.0.3"
+  }
 }

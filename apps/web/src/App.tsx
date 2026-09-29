@@ -1,4 +1,4 @@
-import './App.css'
+import './App.css';
 
 function App() {
   return (
@@ -9,12 +9,14 @@ function App() {
       </header>
 
       <main className="alarm-create__content">
-        <div className="alarm-create__placeholder" aria-hidden="true">◎</div>
+        <div className="alarm-create__placeholder" aria-hidden="true">
+          ◎
+        </div>
         <h2>알람을 만들 장소를 골라주세요</h2>
         <p>지도와 장소 검색 화면이 준비 중이에요.</p>
       </main>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

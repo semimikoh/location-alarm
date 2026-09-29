@@ -1,0 +1,9 @@
+design/
+node_modules/
+**/node_modules/
+dist/
+**/dist/
+.expo/
+**/.expo/
+apps/mobile/assets/editor/
+pnpm-lock.yaml
