@@ -1,0 +1,25 @@
+{
+  "expo": {
+    "name": "위치 알람",
+    "slug": "location-alarm",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/app-icon.png",
+    "scheme": "location-alarm",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "bundleIdentifier": "com.semimikoh.locationalarm"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#F5F3F0",
+        "foregroundImage": "./assets/images/app-icon.png"
+      },
+      "package": "com.semimikoh.locationalarm"
+    },
+    "plugins": ["expo-router"],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
