@@ -17,7 +17,47 @@
       },
       "package": "com.semimikoh.locationalarm"
     },
-    "plugins": ["expo-router"],
+    "plugins": [
+      "expo-router",
+      [
+        "expo-font",
+        {
+          "android": {
+            "fonts": [
+              {
+                "fontFamily": "IBM Plex Sans KR",
+                "fontDefinitions": [
+                  {
+                    "path": "./assets/fonts/IBMPlexSansKR-Regular.otf",
+                    "weight": 400
+                  },
+                  {
+                    "path": "./assets/fonts/IBMPlexSansKR-Medium.otf",
+                    "weight": 500
+                  },
+                  {
+                    "path": "./assets/fonts/IBMPlexSansKR-SemiBold.otf",
+                    "weight": 600
+                  },
+                  {
+                    "path": "./assets/fonts/IBMPlexSansKR-Bold.otf",
+                    "weight": 700
+                  }
+                ]
+              }
+            ]
+          },
+          "ios": {
+            "fonts": [
+              "./assets/fonts/IBMPlexSansKR-Regular.otf",
+              "./assets/fonts/IBMPlexSansKR-Medium.otf",
+              "./assets/fonts/IBMPlexSansKR-SemiBold.otf",
+              "./assets/fonts/IBMPlexSansKR-Bold.otf"
+            ]
+          }
+        }
+      ]
+    ],
     "experiments": {
       "typedRoutes": true
     }

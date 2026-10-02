@@ -8,4 +8,5 @@ dist/
 apps/mobile/assets/editor/
 apps/mobile/ios/
 apps/mobile/android/
+**/expo-env.d.ts
 pnpm-lock.yaml
