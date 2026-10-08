@@ -58,6 +58,23 @@ export function NativeFixturePreview({ onClose }: NativeFixturePreviewProps) {
             개발용 fixture · 버튼과 토글은 저장하거나 감시를 시작하지 않아요
           </AppText>
 
+          <Section title="알람 울림" backgroundColor={colors.alarmBg}>
+            <AppText variant="caption" color="onAccent">
+              위치 알람 · 강남역 2번 출구
+            </AppText>
+            <AppText variant="title" color="onAccent">
+              회사 앞에서 내리기
+            </AppText>
+            <AppText variant="body" color="onAccent">
+              반경 500m 안에 도착했어요
+            </AppText>
+            <ActionButton
+              label="알람 끄기"
+              variant="destructive"
+              onPress={showFixtureNotice}
+            />
+          </Section>
+
           <Section title="버튼과 상태" backgroundColor={colors.surface}>
             <ActionButton label="기본 버튼" onPress={showFixtureNotice} />
             <ActionButton
