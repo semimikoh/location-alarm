@@ -1,0 +1,183 @@
+{
+  "version": "6",
+  "dialect": "sqlite",
+  "id": "a0a4a025-bf21-43a8-89bd-55ee9e3cfe96",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "tables": {
+    "alarms": {
+      "name": "alarms",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "label": {
+          "name": "label",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "latitude": {
+          "name": "latitude",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "longitude": {
+          "name": "longitude",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "place_name": {
+          "name": "place_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "radius": {
+          "name": "radius",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": 500
+        },
+        "enabled": {
+          "name": "enabled",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": true
+        },
+        "repeat": {
+          "name": "repeat",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": true
+        },
+        "repeat_days": {
+          "name": "repeat_days",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'[1,2,3,4,5]'"
+        },
+        "window_start": {
+          "name": "window_start",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "window_end": {
+          "name": "window_end",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "sound_id": {
+          "name": "sound_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'default'"
+        },
+        "vibrate": {
+          "name": "vibrate",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "last_fired_at": {
+          "name": "last_fired_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "alarms_label_not_empty": {
+          "name": "alarms_label_not_empty",
+          "value": "length(trim(\"alarms\".\"label\")) > 0"
+        },
+        "alarms_place_name_not_empty": {
+          "name": "alarms_place_name_not_empty",
+          "value": "length(trim(\"alarms\".\"place_name\")) > 0"
+        },
+        "alarms_latitude_range": {
+          "name": "alarms_latitude_range",
+          "value": "\"alarms\".\"latitude\" >= -90 AND \"alarms\".\"latitude\" <= 90"
+        },
+        "alarms_longitude_range": {
+          "name": "alarms_longitude_range",
+          "value": "\"alarms\".\"longitude\" >= -180 AND \"alarms\".\"longitude\" <= 180"
+        },
+        "alarms_radius_range": {
+          "name": "alarms_radius_range",
+          "value": "\"alarms\".\"radius\" >= 200 AND \"alarms\".\"radius\" <= 2000"
+        },
+        "alarms_enabled_boolean": {
+          "name": "alarms_enabled_boolean",
+          "value": "\"alarms\".\"enabled\" IN (0, 1)"
+        },
+        "alarms_repeat_boolean": {
+          "name": "alarms_repeat_boolean",
+          "value": "\"alarms\".\"repeat\" IN (0, 1)"
+        },
+        "alarms_vibrate_boolean": {
+          "name": "alarms_vibrate_boolean",
+          "value": "\"alarms\".\"vibrate\" IN (0, 1)"
+        },
+        "alarms_repeat_schedule": {
+          "name": "alarms_repeat_schedule",
+          "value": "(\"alarms\".\"repeat\" = 1 AND \"alarms\".\"repeat_days\" <> '[]' AND \"alarms\".\"window_start\" GLOB '[0-2][0-9]:[0-5][0-9]' AND CAST(substr(\"alarms\".\"window_start\", 1, 2) AS INTEGER) <= 23 AND \"alarms\".\"window_end\" GLOB '[0-2][0-9]:[0-5][0-9]' AND CAST(substr(\"alarms\".\"window_end\", 1, 2) AS INTEGER) <= 23 AND (CAST(substr(\"alarms\".\"window_start\", 1, 2) AS INTEGER) * 60 + CAST(substr(\"alarms\".\"window_start\", 4, 2) AS INTEGER)) < (CAST(substr(\"alarms\".\"window_end\", 1, 2) AS INTEGER) * 60 + CAST(substr(\"alarms\".\"window_end\", 4, 2) AS INTEGER))) OR (\"alarms\".\"repeat\" = 0 AND \"alarms\".\"repeat_days\" = '[]' AND \"alarms\".\"window_start\" IS NULL AND \"alarms\".\"window_end\" IS NULL)"
+        }
+      }
+    }
+  },
+  "views": {},
+  "enums": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  },
+  "internal": {
+    "indexes": {}
+  }
+}
