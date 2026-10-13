@@ -1,6 +1,6 @@
 import { useCallback, useRef, useState } from 'react';
 import type { Alarm } from '@location-alarm/shared';
-import { useFocusEffect } from 'expo-router';
+import { useFocusEffect, useRouter } from 'expo-router';
 import { Alert, FlatList, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {
@@ -32,6 +32,7 @@ function showActionError() {
 
 export default function AlarmListScreen() {
   const colors = useAppColors();
+  const router = useRouter();
   const [showFixtures, setShowFixtures] = useState(false);
   const [alarms, setAlarms] = useState<Alarm[] | null>(null);
   const [loadError, setLoadError] = useState(false);
@@ -117,7 +118,11 @@ export default function AlarmListScreen() {
   }
 
   function showAddNotice() {
-    Alert.alert('알람 생성', '알람 생성 화면을 준비하고 있어요.');
+    router.push('/alarm-editor');
+  }
+
+  function openEditor(id: string) {
+    router.push({ pathname: '/alarm-editor', params: { id } });
   }
 
   if (__DEV__ && showFixtures) {
@@ -161,6 +166,7 @@ export default function AlarmListScreen() {
               onRequestToggle={(enabled) =>
                 void changeEnabled(item.id, enabled)
               }
+              onEdit={() => openEditor(item.id)}
               onDelete={() => confirmDelete(item)}
             />
           )}

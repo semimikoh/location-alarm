@@ -18,6 +18,7 @@ type AlarmCardProps = {
   onBlocked?: (reason: Exclude<AlarmBlockReason, null>) => void;
   firedToday?: boolean;
   saving?: boolean;
+  onEdit?: () => void;
   onDelete?: () => void;
 };
 
@@ -30,6 +31,7 @@ export function AlarmCard({
   onBlocked,
   firedToday = false,
   saving = false,
+  onEdit,
   onDelete,
 }: AlarmCardProps) {
   const colors = useAppColors();
@@ -106,19 +108,37 @@ export function AlarmCard({
           {status}
         </AppText>
       ) : null}
-      {onDelete ? (
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel={`${alarm.label} 삭제`}
-          accessibilityState={{ disabled: saving }}
-          disabled={saving}
-          onPress={onDelete}
-          style={styles.deleteAction}
-        >
-          <AppText variant="label" color="danger">
-            삭제
-          </AppText>
-        </Pressable>
+      {onEdit || onDelete ? (
+        <View style={styles.actions}>
+          {onEdit ? (
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel={`${alarm.label} 수정`}
+              accessibilityState={{ disabled: saving }}
+              disabled={saving}
+              onPress={onEdit}
+              style={styles.action}
+            >
+              <AppText variant="label" color="accentInk">
+                수정
+              </AppText>
+            </Pressable>
+          ) : null}
+          {onDelete ? (
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel={`${alarm.label} 삭제`}
+              accessibilityState={{ disabled: saving }}
+              disabled={saving}
+              onPress={onDelete}
+              style={styles.action}
+            >
+              <AppText variant="label" color="danger">
+                삭제
+              </AppText>
+            </Pressable>
+          ) : null}
+        </View>
       ) : null}
     </View>
   );
@@ -135,9 +155,13 @@ const styles = StyleSheet.create({
   details: { flex: 1, minHeight: 44, justifyContent: 'center', gap: space[1] },
   name: { fontWeight: '600' },
   schedule: { gap: space[2] },
-  deleteAction: {
+  actions: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    gap: space[4],
+  },
+  action: {
     minHeight: 44,
-    alignSelf: 'flex-end',
     justifyContent: 'center',
   },
 });
