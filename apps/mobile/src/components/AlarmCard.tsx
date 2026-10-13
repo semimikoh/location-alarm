@@ -17,6 +17,8 @@ type AlarmCardProps = {
   onRequestToggle: (enabled: boolean) => void;
   onBlocked?: (reason: Exclude<AlarmBlockReason, null>) => void;
   firedToday?: boolean;
+  saving?: boolean;
+  onDelete?: () => void;
 };
 
 export function AlarmCard({
@@ -27,6 +29,8 @@ export function AlarmCard({
   onRequestToggle,
   onBlocked,
   firedToday = false,
+  saving = false,
+  onDelete,
 }: AlarmCardProps) {
   const colors = useAppColors();
   const isInactive = registrationState !== 'on' || blockedReason !== null;
@@ -34,12 +38,21 @@ export function AlarmCard({
     registrationState === 'error'
       ? '등록에 실패했어요'
       : firedToday && alarm.repeat
-        ? '오늘 울림 · 내일 다시'
-        : !alarm.repeat && alarm.lastFiredAt !== null && isInactive
+        ? alarm.enabled
+          ? '오늘 울림 · 내일 다시'
+          : '오늘 울림 · 현재 꺼짐'
+        : !alarm.repeat && alarm.lastFiredAt !== null && !alarm.enabled
           ? '한 번 울리고 꺼짐'
-          : isInactive
-            ? '감시 중이 아님'
-            : null;
+          : registrationState === 'registering'
+            ? '위치 감시 등록 중'
+            : alarm.enabled &&
+                isInactive &&
+                registrationState === 'off' &&
+                blockedReason === null
+              ? '위치 감시 준비 중'
+              : isInactive
+                ? '감시 중이 아님'
+                : null;
 
   return (
     <View
@@ -66,6 +79,8 @@ export function AlarmCard({
         <AlarmToggle
           label={`${alarm.label} 알람`}
           state={registrationState}
+          enabled={alarm.enabled}
+          saving={saving}
           blockedReason={blockedReason}
           onRequestToggle={onRequestToggle}
           onBlocked={onBlocked}
@@ -91,6 +106,20 @@ export function AlarmCard({
           {status}
         </AppText>
       ) : null}
+      {onDelete ? (
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={`${alarm.label} 삭제`}
+          accessibilityState={{ disabled: saving }}
+          disabled={saving}
+          onPress={onDelete}
+          style={styles.deleteAction}
+        >
+          <AppText variant="label" color="danger">
+            삭제
+          </AppText>
+        </Pressable>
+      ) : null}
     </View>
   );
 }
@@ -106,4 +135,9 @@ const styles = StyleSheet.create({
   details: { flex: 1, minHeight: 44, justifyContent: 'center', gap: space[1] },
   name: { fontWeight: '600' },
   schedule: { gap: space[2] },
+  deleteAction: {
+    minHeight: 44,
+    alignSelf: 'flex-end',
+    justifyContent: 'center',
+  },
 });

@@ -8,6 +8,8 @@ export type AlarmBlockReason = 'permission' | 'limit' | null;
 type AlarmToggleProps = {
   label: string;
   state: AlarmRegistrationState;
+  enabled?: boolean;
+  saving?: boolean;
   blockedReason?: AlarmBlockReason;
   onRequestToggle: (enabled: boolean) => void;
   onBlocked?: (reason: Exclude<AlarmBlockReason, null>) => void;
@@ -16,24 +18,32 @@ type AlarmToggleProps = {
 export function AlarmToggle({
   label,
   state,
+  enabled,
+  saving = false,
   blockedReason = null,
   onRequestToggle,
   onBlocked,
 }: AlarmToggleProps) {
   const colors = useAppColors();
-  const isOn = state === 'on' && blockedReason === null;
-  const isBusy = state === 'registering';
+  const isOn =
+    blockedReason === null &&
+    (state === 'on' || (state === 'off' && enabled === true));
+  const isBusy = state === 'registering' || saving;
   const status = blockedReason
     ? blockedReason === 'permission'
       ? '위치 권한 필요'
       : '등록 한도 도달'
-    : state === 'registering'
-      ? '등록 중'
-      : state === 'error'
-        ? '등록 실패'
-        : isOn
-          ? '켜짐'
-          : '꺼짐';
+    : saving
+      ? '저장 중'
+      : state === 'registering'
+        ? '등록 중'
+        : state === 'error'
+          ? '등록 실패'
+          : isOn && state !== 'on'
+            ? '켜짐 · 감시 준비'
+            : isOn
+              ? '켜짐'
+              : '꺼짐';
 
   function handlePress() {
     if (blockedReason) {
