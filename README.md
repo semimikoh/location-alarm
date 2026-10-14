@@ -1,8 +1,8 @@
 # 위치 알람
 
-> **현재 단계:** 수동 좌표로 알람을 만들고 SQLite에 저장할 수 있습니다. 위치 감시와 실제 울림은 아직 구현되지 않았습니다. 카카오 지도·검색도 연결 전이므로 지금 실행할 때 카카오 키는 필요하지 않습니다.
+> **현재 단계:** 수동 좌표로 알람을 만들고 SQLite에 저장할 수 있습니다. 내장 웹 편집기 화면은 로딩 확인용 미리보기입니다. 위치 감시와 실제 울림은 아직 구현되지 않았습니다. 카카오 지도·검색도 연결 전이므로 지금 실행할 때 카카오 키는 필요하지 않습니다.
 >
-> **이후 지도 연결 시:** 내장 웹뷰에서 사용할 카카오 JavaScript 키의 SDK 도메인에 `https://localhost` 등록을 계획하고 있습니다. 실제 웹뷰 origin은 Android·iOS 개발 빌드에서 확인한 뒤 확정합니다. [카카오 도메인 설정](https://developers.kakao.com/docs/en/app-setting/app)
+> **이후 지도 연결 시:** 내장 웹뷰에서 사용할 카카오 JavaScript 키의 SDK 도메인에 `https://localhost` 등록을 계획하고 있습니다. 현재 Android 릴리스 빌드의 웹뷰 origin은 `https://localhost`로 확인했습니다. iOS와 카카오 SDK 로딩은 지도 연결 단계에서 확인합니다. [카카오 도메인 설정](https://developers.kakao.com/docs/en/app-setting/app)
 >
 > **Android 종료 상태 제약:** 향후 지오펜스를 붙여도 Android에서 종료된 앱은 위치 진입 이벤트만으로 자동 재시작되지 않습니다. 최근 앱 목록에서 제거한 경우의 동작은 기기마다 다릅니다. 현재 앱은 지오펜스 자체가 없어 위치 진입 알람을 울리지 않습니다. [Expo Location 문서](https://docs.expo.dev/versions/v57.0.0/sdk/location/)
 
@@ -29,6 +29,8 @@ pnpm --filter @location-alarm/mobile ios
 pnpm dev:mobile
 ```
 
+`android`, `ios`, `dev:mobile` 명령은 웹 화면을 JavaScript·CSS가 포함된 단일 HTML로 빌드하고 `apps/mobile/assets/editor/index.html`에 복사합니다. 이 파일은 생성물이라 Git에 넣지 않습니다. 다른 방식으로 앱을 빌드한다면 먼저 `pnpm editor:bundle`을 실행하세요.
+
 네이티브 의존성, `apps/mobile/app.json`, Expo SDK를 바꾼 뒤에는 개발 빌드를 다시 만듭니다. 생성된 네이티브 프로젝트를 갱신해야 할 때는 아래 명령을 실행한 뒤 위의 Android 또는 iOS 빌드 명령을 다시 실행합니다.
 
 ```sh
@@ -45,6 +47,8 @@ pnpm --dir apps/mobile exec expo prebuild --clean
 
 목록의 **켜짐**은 SQLite에 저장된 설정입니다. 화면의 **감시 준비** 문구처럼 OS 위치 감시는 시작하지 않습니다. 따라서 지금은 실제 위치에 도착해도 알람이 울리지 않습니다. 개발 빌드의 **컴포넌트 확인**은 화면 fixture이며 실제 DB를 바꾸지 않습니다.
 
+첫 화면의 **내장 웹 확인**을 누르면 앱에 포함된 웹 편집기 미리보기가 열립니다. 아래에는 WebView가 보고한 origin이 표시됩니다. 이 화면의 입력·저장은 아직 SQLite와 연결되지 않았으므로 실제 알람은 **알람 추가**에서 만드세요.
+
 ## 로컬 DB 초기화
 
 앱 시작 시 `location-alarm.db`를 열고 포함된 Drizzle 마이그레이션을 자동 적용합니다. 앱을 재시작해도 저장된 알람은 유지됩니다. 별도 DB 생성 명령은 필요하지 않습니다.
@@ -60,5 +64,12 @@ pnpm --dir apps/mobile exec expo prebuild --clean
 - 이름과 반복 설정을 수정해 1회용으로 바꾼 뒤 앱을 강제 종료하고 다시 열어 변경값이 유지됨을 확인했습니다.
 - 삭제 확인 후 목록과 DB가 모두 빈 상태로 돌아왔습니다. 확인용 알람은 남기지 않았습니다.
 - `pnpm check`가 통과했습니다. iOS 개발 빌드와 실제 위치 진입·백그라운드 울림은 아직 검증하지 않았습니다.
+
+2026-10-14, 같은 Android 에뮬레이터에서 C15 내장 웹 화면을 추가로 확인했습니다.
+
+- `pnpm editor:bundle`로 246KB 단일 HTML을 만들고, Android 릴리스 APK 빌드에서 HTML 자산이 포함되는 것을 확인했습니다.
+- 비행기 모드에서 릴리스 앱의 **내장 웹 확인** 화면이 열렸고, HTML 구조와 CSS가 표시됐습니다. `1회용` 버튼 선택 상태가 바뀌어 JavaScript 실행도 확인했습니다.
+- 앱 강제 종료 후 비행기 모드를 유지한 채 다시 열어도 화면이 로드됐습니다. WebView가 보고한 origin은 `https://localhost`였습니다. 확인 후 비행기 모드를 해제했습니다.
+- iOS의 오프라인 로딩과 origin은 아직 확인하지 않았습니다.
 
 화면 상태 확인 방법은 [컴포넌트 체크리스트](docs/component-checklist.md)를 참고하세요.

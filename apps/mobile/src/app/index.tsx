@@ -175,15 +175,20 @@ export default function AlarmListScreen() {
           }
         />
       )}
-      {__DEV__ ? (
-        <View style={styles.previewButton}>
+      <View style={styles.previewButton}>
+        <ActionButton
+          label="내장 웹 확인"
+          variant="secondary"
+          onPress={() => router.push('./editor-preview')}
+        />
+        {__DEV__ ? (
           <ActionButton
             label="컴포넌트 확인"
             variant="secondary"
             onPress={() => setShowFixtures(true)}
           />
-        </View>
-      ) : null}
+        ) : null}
+      </View>
     </SafeAreaView>
   );
 }
@@ -192,5 +197,5 @@ const styles = StyleSheet.create({
   screen: { flex: 1 },
   center: { flex: 1, justifyContent: 'center' },
   list: { padding: space[4], paddingBottom: space[8], gap: space[3] },
-  previewButton: { padding: space[4] },
+  previewButton: { padding: space[4], gap: space[2] },
 });
